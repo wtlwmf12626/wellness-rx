@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Wellness Rx">
+<meta name="theme-color" content="#0d1f0f">
+<title>Wellness Rx</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1f0f; --bg2:#132416; --card:#182d1b; --card2:#1e3621;
+  --border:#2a4a2e; --sage:#6dab7b; --sage-dim:#3d7049;
+  --amber:#e8a23a; --amber-dim:#7a5018; --red:#e05c5c; --red-dim:#6b2828;
+  --blue:#6ab4d8; --text:#d8edd0; --text2:#7fa886; --text3:#4a6e50;
+  --mono:'JetBrains Mono',monospace; --sans:'Epilogue',sans-serif;
+  --display:'Syne',sans-serif; --nav-h:72px;
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;background:var(--bg)}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh}
+#views{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav-h) + var(--safe-bot) + 8px);scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+#views::-webkit-scrollbar{display:none}
+#views{scrollbar-width:none}
+
+/* NAV */
+#nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + var(--safe-bot));padding-bottom:var(--safe-bot);background:rgba(13,31,15,0.96);border-top:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;z-index:100}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:none;border:none;cursor:pointer;transition:all 0.2s;padding:8px 0;color:var(--text3);-webkit-tap-highlight-color:transparent}
+.nav-btn .ni{font-size:22px;transition:transform 0.2s}
+.nav-btn .nl{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.nav-btn.active{color:var(--sage)}
+.nav-btn.active .ni{transform:translateY(-2px)}
+
+/* VIEWS */
+.view{display:none;padding:0 0 16px;animation:fadeUp 0.3s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* PAGE HEADER */
+.page-header{padding:52px 20px 20px;background:linear-gradient(180deg,var(--bg2) 0%,transparent 100%)}
+.page-header .overline{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:4px}
+.page-header h1{font-family:var(--display);font-size:28px;font-weight:800;color:var(--text);line-height:1.1}
+.page-header .subtitle{font-size:13px;color:var(--text2);margin-top:4px;font-weight:300}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:0 16px 12px}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.card-body{padding:0 16px 16px}
+.card-body.collapsed{display:none}
+.section-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:16px 20px 8px}
+
+/* TODAY HERO */
+.hero{background:linear-gradient(145deg,var(--bg2),var(--card2));border:1px solid var(--border);border-radius:20px;margin:0 16px 16px;padding:20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(109,171,123,.12) 0%,transparent 70%);pointer-events:none}
+.hero-date{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--sage);text-transform:uppercase}
+.hero-day{font-family:var(--display);font-size:32px;font-weight:800;color:var(--text);line-height:1;margin:6px 0 4px}
+.hero-type{font-size:14px;color:var(--text2);font-weight:300;font-style:italic}
+.hero-cals{display:flex;align-items:baseline;gap:6px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.big-num{font-family:var(--mono);font-size:36px;font-weight:600;color:var(--amber)}
+.unit{font-size:13px;color:var(--text2)}
+.divider-v{color:var(--border);margin:0 8px}
+.prot-num{font-family:var(--mono);font-size:24px;font-weight:600;color:var(--sage)}
+
+/* MACRO ROW */
+.macro-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:0 16px 16px}
+.macro-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center}
+.macro-card .mv{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--text)}
+.macro-card .mu{font-family:var(--mono);font-size:10px;color:var(--text2)}
+.macro-card .ml{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-top:4px}
+.macro-card.cal .mv{color:var(--amber)}
+.macro-card.prot .mv{color:var(--sage)}
+.macro-card.type .mv{font-size:13px;font-family:var(--sans);color:var(--blue);font-weight:500}
+
+/* TIMELINE */
+.timeline{margin:0 16px 16px}
+.tli{display:flex;gap:14px;padding:10px 0;position:relative}
+.tli:not(:last-child)::after{content:'';position:absolute;left:19px;top:36px;bottom:-4px;width:1px;background:var(--border)}
+.tl-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--card2);border:1px solid var(--border)}
+.tl-dot.done{background:var(--sage-dim);border-color:var(--sage)}
+.tl-content{flex:1;padding-top:4px}
+.tl-time{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.tl-name{font-size:14px;font-weight:600;color:var(--text)}
+.tl-recipe{font-size:12px;color:var(--text2);font-style:italic;margin-top:1px}
+.tl-cals{font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:8px}
+
+/* RECOVERY */
+.recovery-blurb{background:linear-gradient(135deg,rgba(109,171,123,.1),rgba(109,171,123,.04));border:1px solid var(--sage-dim);border-radius:14px;margin:0 16px 12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.recovery-blurb .icon{font-size:22px}
+.r-label{font-family:var(--mono);font-size:10px;color:var(--sage);letter-spacing:.1em;text-transform:uppercase}
+.r-name{font-size:14px;font-weight:600;margin-top:2px}
+.r-time{font-size:12px;color:var(--text2)}
+
+/* WEEK BANNER */
+.week-banner{background:var(--card);border:1px solid var(--border);border-radius:14px;margin:0 16px 16px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.wb-label{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+.wb-week{font-size:14px;font-weight:600;color:var(--text)}
+.wb-note{font-size:12px;color:var(--text2);margin-top:2px;font-style:italic}
+
+/* DAY PICKER */
+.day-picker{display:flex;gap:6px;padding:0 16px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.day-picker::-webkit-scrollbar{display:none}
+.day-pill{padding:8px 14px;border-radius:100px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;transition:all 0.2s;flex-shrink:0}
+.day-pill.active{background:var(--sage-dim);border-color:var(--sage);color:var(--text)}
+.day-pill.today-pill{border-color:var(--amber-dim);color:var(--amber)}
+.day-pill.active.today-pill{background:var(--amber-dim);border-color:var(--amber);color:var(--text)}
+
+/* MEAL CARDS */
+.meal-card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin:0 16px 10px;overflow:hidden;transition:border-color .2s}
+.meal-card.done{border-color:var(--sage-dim);opacity:.7}
+.meal-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.meal-check{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:16px;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.meal-card.done .meal-check{background:var(--sage-dim);border-color:var(--sage)}
+.meal-info{flex:1}
+.meal-name{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono)}
+.meal-recipe{font-size:15px;font-weight:600;color:var(--text);margin-top:2px}
+.meal-time{font-family:var(--mono);font-size:11px;color:var(--text2)}
+.meal-stats{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.meal-cal{font-family:var(--mono);font-size:14px;color:var(--amber)}
+.meal-prot{font-family:var(--mono);font-size:12px;color:var(--sage)}
+.meal-expand{color:var(--text3);font-size:18px;margin-left:8px;transition:transform .2s}
+.meal-card.open .meal-expand{transform:rotate(180deg)}
+.meal-details{padding:0 16px 14px;display:none;border-top:1px solid var(--border)}
+.meal-card.open .meal-details{display:block}
+.ingredient-list{list-style:none;margin-top:10px}
+.ingredient-list li{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px;color:var(--text2);border-bottom:1px solid rgba(42,74,46,.5)}
+.ingredient-list li:last-child{border-bottom:none}
+.ingredient-list li::before{content:'·';color:var(--sage);font-size:18px;flex-shrink:0}
+.meal-note{background:rgba(232,162,58,.08);border:1px solid var(--amber-dim);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--amber);margin-top:10px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;margin:0 16px 16px;padding:14px 16px}
+.progress-row{margin-bottom:10px}
+.progress-row:last-child{margin-bottom:0}
+.progress-labels{display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px}
+.progress-labels .p-name{color:var(--text2)}
+.progress-labels .p-val{font-family:var(--mono);color:var(--text)}
+.progress-track{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.progress-fill.cal{background:var(--amber)}
+.progress-fill.prot{background:var(--sage)}
+.progress-fill.carb{background:var(--blue)}
+
+/* VIEWING OTHER DAY NOTICE */
+.viewing-banner{background:rgba(232,162,58,.08);border:1px solid var(--amber-dim);border-radius:12px;margin:0 16px 12px;padding:10px 14px;font-size:12px;color:var(--amber);display:flex;align-items:center;gap:8px}
+
+/* MOVE */
+.workout-hero{background:linear-gradient(145deg,#152d1a,#0f2212);border:1px solid var(--border);border-radius:20px;margin:0 16px 16px;padding:20px;position:relative;overflow:hidden}
+.workout-hero::after{content:'';position:absolute;bottom:-20px;right:-20px;width:120px;height:120px;background:radial-gradient(circle,rgba(232,162,58,.1) 0%,transparent 70%)}
+.workout-tag{display:inline-block;background:var(--amber-dim);color:var(--amber);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px}
+.workout-name{font-family:var(--display);font-size:26px;font-weight:800;color:var(--text);line-height:1.1}
+.workout-meta{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.wm-item{text-align:center}
+.wm-val{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--text)}
+.wm-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.exercise-item{background:var(--card);border:1px solid var(--border);border-radius:14px;margin:0 16px 8px;padding:14px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .2s}
+.exercise-item.done{border-color:var(--sage-dim);opacity:.6}
+.ex-row{display:flex;align-items:center;gap:12px}
+.ex-check{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all .2s}
+.exercise-item.done .ex-check{background:var(--sage-dim);border-color:var(--sage)}
+.ex-name{font-size:15px;font-weight:600;flex:1}
+.ex-sets{font-family:var(--mono);font-size:12px;color:var(--amber)}
+.ex-cue{font-size:12px;color:var(--text2);margin-top:6px;padding-left:40px;font-style:italic;line-height:1.4}
+
+/* REST TIMER */
+.rest-timer-card{background:var(--card2);border:1px solid var(--border);border-radius:16px;margin:0 16px 16px;padding:16px;text-align:center}
+.rest-timer-label{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.timer-display{font-family:var(--mono);font-size:52px;font-weight:600;color:var(--text);letter-spacing:-2px;transition:color .3s}
+.timer-display.running{color:var(--sage)}
+.timer-display.done{color:var(--amber)}
+.timer-btns{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.t-btn{padding:10px 20px;border-radius:100px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:var(--mono);font-size:13px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .2s}
+.t-btn.primary{background:var(--sage-dim);border-color:var(--sage)}
+.t-btn:active{transform:scale(.96)}
+
+/* MICRO */
+.micro-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px 16px}
+.micro-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
+.micro-icon{font-size:20px;margin-bottom:4px}
+.micro-name{font-size:12px;font-weight:600;color:var(--text);line-height:1.3}
+.micro-when{font-size:11px;color:var(--text2);margin-top:2px}
+.micro-dur{font-family:var(--mono);font-size:10px;color:var(--sage);margin-top:4px}
+
+/* RECOVER */
+.recover-tab-row{display:flex;gap:8px;padding:0 16px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.recover-tab-row::-webkit-scrollbar{display:none}
+.r-tab{padding:8px 16px;border-radius:100px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:13px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;transition:all .2s}
+.r-tab.active{background:var(--sage-dim);border-color:var(--sage);color:var(--text)}
+.recover-panel{display:none}
+.recover-panel.active{display:block}
+.stretch-item{background:var(--card);border:1px solid var(--border);border-radius:14px;margin:0 16px 8px;padding:14px 16px;transition:border-color .2s}
+.stretch-item.done{border-color:var(--sage-dim);opacity:.65}
+.stretch-row{display:flex;align-items:center;gap:12px}
+.stretch-icon{font-size:24px;width:36px;text-align:center}
+.stretch-info{flex:1}
+.stretch-name{font-size:15px;font-weight:600}
+.stretch-target{font-size:12px;color:var(--text2);margin-top:2px}
+.stretch-time-btn{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-family:var(--mono);font-size:12px;color:var(--sage);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .2s;white-space:nowrap}
+.stretch-time-btn.running{background:var(--sage-dim);border-color:var(--sage);color:var(--text)}
+.stretch-how{font-size:12px;color:var(--text2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.5;font-style:italic}
+.ih-item{background:var(--card);border:1px solid var(--border);border-radius:14px;margin:0 16px 8px;padding:14px 16px}
+.ih-situation{font-size:14px;font-weight:600;margin-bottom:6px}
+.ih-protocol{font-size:13px;color:var(--text2);line-height:1.5}
+.lymph-step{display:flex;gap:14px;margin:0 16px 10px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.lymph-step.done{border-color:var(--sage-dim);opacity:.65}
+.lymph-num{width:32px;height:32px;border-radius:50%;background:var(--sage-dim);color:var(--text);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:600;flex-shrink:0}
+.lymph-content{flex:1}
+.lymph-name{font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lymph-how{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.4}
+.lymph-dur{font-family:var(--mono);font-size:11px;color:var(--sage);margin-top:6px}
+
+/* SAFE */
+.search-wrap{padding:0 16px 12px}
+.search-input-wrap{position:relative}
+.search-input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px 14px 44px;font-family:var(--sans);font-size:16px;color:var(--text);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.search-input:focus{border-color:var(--sage-dim)}
+.search-input::placeholder{color:var(--text3)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none}
+.safe-legend{display:flex;gap:10px;padding:0 16px 12px}
+.safe-badge{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+.safe-dot{width:8px;height:8px;border-radius:50%}
+.safe-dot.go{background:var(--sage)}
+.safe-dot.no{background:var(--red)}
+.safe-dot.mod{background:var(--amber)}
+.food-list{padding:0 16px}
+.food-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.food-item:last-child{border-bottom:none}
+.food-status{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.food-status.go{background:var(--sage)}
+.food-status.no{background:var(--red)}
+.food-status.mod{background:var(--amber)}
+.food-info{flex:1}
+.food-name{font-size:15px;font-weight:500}
+.food-note{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.4}
+.food-swap{font-size:12px;color:var(--sage);margin-top:3px}
+.empty-search{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px}
+
+/* UTIL */
+.badge{display:inline-block;padding:3px 9px;border-radius:100px;font-family:var(--mono);font-size:11px}
+.badge.green{background:var(--sage-dim);color:var(--sage)}
+.badge.amber{background:var(--amber-dim);color:var(--amber)}
+.info-pill{display:flex;align-items:center;gap:8px;background:rgba(109,171,123,.08);border:1px solid var(--sage-dim);border-radius:12px;margin:0 16px 12px;padding:10px 14px;font-size:13px;color:var(--text2);line-height:1.4}
+.info-pill .ip-icon{font-size:16px;flex-shrink:0}
+
+/* LOADING */
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px;transition:opacity .4s}
+#loading.hidden{opacity:0;pointer-events:none}
+.load-logo{font-family:var(--display);font-size:32px;font-weight:800;color:var(--sage)}
+.load-sub{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase}
+.load-spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--sage);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div id="loading">
+  <div class="load-logo">Wellness Rx</div>
+  <div class="load-spinner"></div>
+  <div class="load-sub">Loading your plan…</div>
+</div>
+
+<div id="app">
+  <div id="views">
+
+    <!-- TODAY -->
+    <div id="v-today" class="view active">
+      <div class="page-header">
+        <div class="overline">Wellness Protocol</div>
+        <h1 id="today-title">—</h1>
+        <div class="subtitle" id="today-subtitle"></div>
+      </div>
+      <div id="week-banner-today"></div>
+      <div id="today-hero" class="hero"></div>
+      <div class="macro-row" id="today-macros"></div>
+      <div class="section-label">Today's Meals</div>
+      <div class="timeline" id="today-timeline"></div>
+      <div class="section-label">Tonight's Recovery</div>
+      <div class="recovery-blurb" id="today-recovery"></div>
+    </div>
+
+    <!-- MEALS -->
+    <div id="v-meals" class="view">
+      <div class="page-header">
+        <div class="overline">Nutrition</div>
+        <h1 id="meals-title">Meals</h1>
+        <div class="subtitle" id="meals-subtitle"></div>
+      </div>
+      <div id="week-banner-meals"></div>
+      <div class="day-picker" id="day-picker"></div>
+      <div id="viewing-banner-wrap"></div>
+      <div class="progress-bar-wrap" id="macro-progress"></div>
+      <div class="section-label">Meal Plan</div>
+      <div id="meals-list"></div>
+      <div class="section-label">Daily Rules</div>
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <span style="font-size:14px;font-weight:600">Eating Principles</span>
+          <span class="meal-expand">⌄</span>
+        </div>
+        <div class="card-body collapsed" style="font-size:13px;color:var(--text2);line-height:1.8">
+          <p>• 3 meals/day — no skipping, especially before a shift</p>
+          <p>• Eat every 4–5 hrs on a consistent schedule</p>
+          <p>• Stop eating 2.5–3 hrs before lying down</p>
+          <p>• One planned sweet treat mid-afternoon, not bedtime</p>
+          <p>• 80–100 oz water/day; sip steadily</p>
+          <p>• Coffee only after eating, not on empty stomach</p>
+          <p style="margin-top:10px;color:var(--amber)">⚠️ Never drop below 1,400 cal on any day</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOVE -->
+    <div id="v-move" class="view">
+      <div class="page-header">
+        <div class="overline">Exercise</div>
+        <h1>Move</h1>
+        <div class="subtitle" id="move-subtitle"></div>
+      </div>
+      <div id="workout-hero-wrap"></div>
+      <div class="section-label">Rest Timer</div>
+      <div class="rest-timer-card">
+        <div class="rest-timer-label">Between Sets</div>
+        <div class="timer-display" id="timer-display">0:45</div>
+        <div class="timer-btns">
+          <button class="t-btn" onclick="setTimer(45)">45s</button>
+          <button class="t-btn" onclick="setTimer(60)">60s</button>
+          <button class="t-btn primary" id="timer-btn" onclick="toggleTimer()">Start</button>
+          <button class="t-btn" onclick="resetTimer()">Reset</button>
+        </div>
+      </div>
+      <div class="section-label" id="ex-section-label">Exercises</div>
+      <div id="exercise-list"></div>
+      <div class="section-label">Micro-Exercises (On Shift)</div>
+      <div class="micro-grid">
+        <div class="micro-item"><div class="micro-icon">🦵</div><div class="micro-name">Calf Raises</div><div class="micro-when">At nurses' station</div><div class="micro-dur">30–60 reps, anytime</div></div>
+        <div class="micro-item"><div class="micro-icon">🏃</div><div class="micro-name">Stair Climbing</div><div class="micro-when">Skip the elevator</div><div class="micro-dur">2–3 flights each time</div></div>
+        <div class="micro-item"><div class="micro-icon">🧘</div><div class="micro-name">Deep Squat Hold</div><div class="micro-when">Restroom break</div><div class="micro-dur">30–60 sec per break</div></div>
+        <div class="micro-item"><div class="micro-icon">💪</div><div class="micro-name">Wall Push-Ups</div><div class="micro-when">Break room / call room</div><div class="micro-dur">2–3 sets of 10</div></div>
+        <div class="micro-item"><div class="micro-icon">🔄</div><div class="micro-name">Shoulder Rolls</div><div class="micro-when">Every 30 min charting</div><div class="micro-dur">30 seconds</div></div>
+        <div class="micro-item"><div class="micro-icon">🌬️</div><div class="micro-name">Diaphragm Breathing</div><div class="micro-when">Any 2-min break</div><div class="micro-dur">5 slow breaths, 3–4×/day</div></div>
+      </div>
+    </div>
+
+    <!-- RECOVER -->
+    <div id="v-recover" class="view">
+      <div class="page-header">
+        <div class="overline">Recovery Protocol</div>
+        <h1>Recover</h1>
+        <div class="subtitle">Active repair — where the real gains happen</div>
+      </div>
+      <div class="info-pill"><span class="ip-icon">💡</span>Tap any timer to start a countdown. Phone vibrates when time is up.</div>
+      <div class="recover-tab-row">
+        <button class="r-tab active" onclick="switchRecoverTab('stretch',this)">Stretches</button>
+        <button class="r-tab" onclick="switchRecoverTab('iceheat',this)">Ice & Heat</button>
+        <button class="r-tab" onclick="switchRecoverTab('lymph',this)">Lymphatic</button>
+        <button class="r-tab" onclick="switchRecoverTab('sleep',this)">Sleep</button>
+      </div>
+      <div class="recover-panel active" id="rp-stretch">
+        <div class="section-label">Lower Body</div>
+        <div id="stretches-lower"></div>
+        <div class="section-label">Upper Body & Posture</div>
+        <div id="stretches-upper"></div>
+      </div>
+      <div class="recover-panel" id="rp-iceheat"><div class="section-label">Situations & Protocols</div><div id="iceheat-list"></div></div>
+      <div class="recover-panel" id="rp-lymph">
+        <div class="info-pill"><span class="ip-icon">🛏️</span>Perform lying on your back. Very light pressure. Best after long standing shifts.</div>
+        <div id="lymph-list"></div>
+        <div class="info-pill" style="margin-top:4px"><span class="ip-icon">🌙</span>After drainage: elevate legs 5–10 min. Sleep on your left side to reduce nighttime reflux.</div>
+      </div>
+      <div class="recover-panel" id="rp-sleep"><div class="section-label">Sleep & Cortisol</div><div id="sleep-list"></div></div>
+    </div>
+
+    <!-- SAFE? -->
+    <div id="v-safe" class="view">
+      <div class="page-header">
+        <div class="overline">Reflux Checker</div>
+        <h1>Safe?</h1>
+        <div class="subtitle">Instant reflux safety lookup</div>
+      </div>
+      <div class="search-wrap">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="food-search" type="search" placeholder="Search a food or ingredient…" oninput="filterFoods(this.value)">
+        </div>
+      </div>
+      <div class="safe-legend">
+        <div class="safe-badge"><div class="safe-dot go"></div>Safe</div>
+        <div class="safe-badge"><div class="safe-dot mod"></div>Moderate</div>
+        <div class="safe-badge"><div class="safe-dot no"></div>Avoid</div>
+      </div>
+      <div class="food-list" id="food-list"></div>
+    </div>
+
+  </div>
+
+  <nav id="nav">
+    <button class="nav-btn active" onclick="switchView('today',this)"><span class="ni">🏠</span><span class="nl">Today</span></button>
+    <button class="nav-btn" onclick="switchView('meals',this)"><span class="ni">🍽</span><span class="nl">Meals</span></button>
+    <button class="nav-btn" onclick="switchView('move',this)"><span class="ni">💪</span><span class="nl">Move</span></button>
+    <button class="nav-btn" onclick="switchView('recover',this)"><span class="ni">🫀</span><span class="nl">Recover</span></button>
+    <button class="nav-btn" onclick="switchView('safe',this)"><span class="ni">🔍</span><span class="nl">Safe?</span></button>
+  </nav>
+</div>
+
+<script>
+// ─── STATIC DATA (never changes week to week) ───────────────────────────────
+
+const DAYS_ORDER = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+const DAY_SHORT = { monday:'Mon', tuesday:'Tue', wednesday:'Wed', thursday:'Thu', friday:'Fri', saturday:'Sat', sunday:'Sun' };
+const WEEK_MAP = {0:'sunday',1:'monday',2:'tuesday',3:'wednesday',4:'thursday',5:'friday',6:'saturday'};
+
+const FOODS = [
+  {name:'Oatmeal',status:'go',note:'Alkaline, coats esophagus, anti-inflammatory. Morning staple.',swap:null},
+  {name:'Chicken breast',status:'go',note:'Lean protein — far less reflux-triggering than red meat.',swap:null},
+  {name:'Turkey breast',status:'go',note:'Excellent lean protein. Go-to lunch protein.',swap:null},
+  {name:'Salmon',status:'go',note:'Omega-3 rich, low-reflux. Baked or grilled preferred.',swap:null},
+  {name:'Cod',status:'go',note:'Very lean, mild white fish. Excellent choice.',swap:null},
+  {name:'Egg whites',status:'go',note:'High protein, essentially no reflux risk.',swap:null},
+  {name:'Greek yogurt (plain)',status:'go',note:'High protein, probiotic. Use plain 0% fat.',swap:null},
+  {name:'Almond milk',status:'go',note:'Alkaline, soothes esophagus.',swap:null},
+  {name:'Bananas',status:'go',note:'Alkaline fruit. Great for smoothies.',swap:null},
+  {name:'Blueberries',status:'go',note:'Low acid, anti-inflammatory.',swap:null},
+  {name:'Melons',status:'go',note:'Alkaline, safe choice.',swap:null},
+  {name:'Pears',status:'go',note:'Low acid, easy to digest.',swap:null},
+  {name:'Mangoes',status:'go',note:'Low acid, sweet without triggering.',swap:null},
+  {name:'Asparagus',status:'go',note:'Alkaline vegetable. Excellent side dish.',swap:null},
+  {name:'Spinach',status:'go',note:'Alkaline, highly nutritious.',swap:null},
+  {name:'Zucchini',status:'go',note:'Low acid, versatile.',swap:null},
+  {name:'Green beans',status:'go',note:'Safe, easy to prepare.',swap:null},
+  {name:'Bok choy',status:'go',note:'Excellent stir fry vegetable.',swap:null},
+  {name:'Bell peppers',status:'go',note:'Roasted or cooked preferred.',swap:null},
+  {name:'Cucumber',status:'go',note:'Hydrating, alkaline, very safe.',swap:null},
+  {name:'Celery',status:'go',note:'Natural antacid properties.',swap:null},
+  {name:'Sweet potato',status:'go',note:'Complex carb, low acid, filling.',swap:null},
+  {name:'Brown rice',status:'go',note:'Complex carb, absorbs excess acid.',swap:null},
+  {name:'Quinoa',status:'go',note:'High protein grain, very safe.',swap:null},
+  {name:'Whole grain bread',status:'go',note:'Absorbs acid. Better than white bread.',swap:null},
+  {name:'Avocado',status:'go',note:'Healthy fats. Use in moderation.',swap:null},
+  {name:'Ginger',status:'go',note:'Natural prokinetic — speeds gastric emptying.',swap:null},
+  {name:'Aloe vera juice',status:'go',note:'1–2 oz before meals soothes esophageal inflammation. Food-grade only.',swap:null},
+  {name:'Fennel',status:'go',note:'Reduces bloating, relaxes LES. As tea or roasted.',swap:null},
+  {name:'Ginger tea',status:'go',note:'Soothing, prokinetic. Best coffee substitute.',swap:null},
+  {name:'Chamomile tea',status:'go',note:'Anti-inflammatory, calming. Excellent evening drink.',swap:null},
+  {name:'Hummus',status:'go',note:'Great protein-rich dip/spread.',swap:null},
+  {name:'Almond butter',status:'go',note:'Healthy fats, low acid. Moderation.',swap:null},
+  {name:'Ground flaxseed',status:'go',note:'Better than chia for digestion. Omega-3 benefits.',swap:null},
+  {name:'Hemp seeds',status:'go',note:'Easy to digest, good omega-3 source.',swap:null},
+  {name:'Coffee (1 max)',status:'mod',note:'Max 1/day. Never on empty stomach.',swap:'Switch to ginger or chamomile for additional drinks'},
+  {name:'Dark chocolate (1–2 squares)',status:'mod',note:'70%+ only. Small amounts earlier in day. Not at night.',swap:'Have mid-afternoon only'},
+  {name:'Lean red meat',status:'mod',note:'Sirloin/lean cuts only. Mild reflux risk. Eat early.',swap:'Chicken or fish preferred — max 1–2×/week'},
+  {name:'Eggs (whole)',status:'mod',note:'Generally fine. Prefer egg whites as primary protein.',swap:null},
+  {name:'Low-fat cheese (small amounts)',status:'mod',note:'Small amounts of feta or low-fat varieties are fine.',swap:'Avoid full-fat cheeses in large amounts'},
+  {name:'Farro',status:'mod',note:'Nutritious grain, safe in normal portions.',swap:null},
+  {name:'Pineapple',status:'mod',note:'Contains helpful enzymes but somewhat acidic. Small portions.',swap:'Melons or bananas preferred'},
+  {name:'ACV (well-diluted)',status:'mod',note:'Tiny splash only in marinades. Never undiluted.',swap:'Use herb + olive oil blends as primary marinade'},
+  {name:'Soy sauce (low sodium)',status:'mod',note:'Small amounts in cooking only.',swap:null},
+  {name:'Citrus fruits',status:'no',note:'Oranges, lemons, grapefruit, limes — highly acidic.',swap:'Melons, bananas, pears, blueberries'},
+  {name:'Tomato sauce',status:'no',note:'Highly acidic, major trigger.',swap:'Butternut squash sauce, avocado sauce, light herb-cream sauces'},
+  {name:'Fried foods',status:'no',note:'High fat delays gastric emptying, relaxes LES.',swap:'Baked, grilled, or steamed with small amounts of olive oil'},
+  {name:'Hot sauce / chili peppers',status:'no',note:'Capsaicin directly irritates esophageal lining.',swap:'Mild herbs: dill, parsley, basil, thyme, cumin'},
+  {name:'Sparkling water / soda',status:'no',note:'Carbonation increases gastric pressure on LES.',swap:'Still water, herbal tea, coconut water'},
+  {name:'Peppermint / mint',status:'no',note:'Relaxes LES — counterintuitively worsens reflux.',swap:'Ginger or chamomile tea'},
+  {name:'Multiple coffees/day',status:'no',note:'Max 1 after food. Even one on empty stomach is risky.',swap:'Ginger tea, chamomile tea'},
+  {name:'Energy drinks',status:'no',note:'High caffeine + carbonation = double trigger.',swap:'Ginger tea or electrolyte water'},
+  {name:'Onions (raw)',status:'no',note:'Potent reflux trigger, especially raw.',swap:'Garlic (cooked), leek (well-cooked, pale part only), celery'},
+  {name:'Mushrooms',status:'no',note:'FODMAPs can worsen GI symptoms.',swap:'Roasted bell pepper, roasted zucchini'},
+  {name:'Broccoli (raw)',status:'no',note:'Gas-producing, can worsen bloating.',swap:'Asparagus, green beans, zucchini, bok choy, spinach'},
+  {name:'Heavy cream sauces',status:'no',note:'High fat relaxes LES and slows gastric emptying.',swap:'Light herb sauces, avocado sauce'},
+  {name:'Chocolate (large/night)',status:'no',note:'Combines fat, caffeine, theobromine — all LES relaxants.',swap:'1–2 squares 70%+ dark chocolate mid-afternoon only'},
+  {name:'Meals close to bedtime',status:'no',note:'Eating within 2–3 hrs of lying down is a major trigger.',swap:'Last meal 2.5–3 hrs before bed'},
+  {name:'Chia seeds',status:'no',note:'Can expand and cause bloating/GI pressure.',swap:'Ground flaxseed (same omega-3 benefit, easier to digest)'},
+  {name:'Standalone cottage cheese',status:'no',note:'Can cause GI distress when eaten plain.',swap:'Blend into smoothies, pancake batter, sauces, or dips only'}
+];
+
+const STRETCHES_LOWER = [
+  {icon:'🦴',name:'Figure-4 Hip Stretch',target:'Piriformis, glutes — relieves OTF and running hip tightness',how:'Lie on back. Cross right ankle over left knee. Flex right foot. Hug left leg in. Switch sides.',secs:60},
+  {icon:'🦵',name:'Kneeling Hip Flexor Lunge',target:'Hip flexors — chronically tight from hospital standing',how:'Right knee down, left foot forward. Tuck pelvis under gently, lean forward slightly.',secs:60},
+  {icon:'🏃',name:'Standing Quad Stretch',target:'Quadriceps — essential post-OTF and running',how:'Stand, pull right foot to glute. Keep knees together. Slight forward lean. Wall for balance.',secs:60},
+  {icon:'🧘',name:'Seated Hamstring Stretch',target:'Hamstrings — essential post-run',how:'Sit on floor, one leg extended. Reach toward foot, hinge from hip (do not round spine).',secs:60},
+  {icon:'🦶',name:'Standing Calf Stretch',target:'Gastrocnemius + soleus — prevents shin splints',how:'Hands on wall, step back with right foot. Straight-knee, then bent-knee version.',secs:60},
+  {icon:'🐦',name:'IT Band / Lying Pigeon',target:'IT band, hip external rotators — common OTF tightness zone',how:'Bring right shin forward at angle on floor, left leg extended behind.',secs:90}
+];
+
+const STRETCHES_UPPER = [
+  {icon:'🚪',name:'Doorway Chest Opener',target:'Pec minor/major — counteracts forward rounding from charting',how:'Stand in doorway, arms at 90 deg on frame. Step through gently.',secs:30},
+  {icon:'🧵',name:'Thread the Needle',target:'Thoracic spine rotation — relieves charting tension',how:'On all fours, slide right arm under left, ear to floor. 30 sec each side.',secs:60},
+  {icon:'🙏',name:'Child\'s Pose with Side Reach',target:'Lats + thoracic spine — post-strength essential',how:'From child\'s pose, walk hands to right, feel left lat stretch. Then left.',secs:60},
+  {icon:'↔️',name:'Neck Side Stretch',target:'Levator scapulae — tight from phone/chart craning',how:'Ear to shoulder, hold, gentle hand pressure on top of head.',secs:60},
+  {icon:'💪',name:'Cross-Body Shoulder Stretch',target:'Posterior deltoid + rotator cuff — post-strength and post-swim',how:'Pull right arm across chest with left hand. Keep shoulder down.',secs:60},
+  {icon:'🐱',name:'Cat-Cow (Spinal Mobility)',target:'Lumbar + thoracic mobility; also massages GI tract',how:'On all fours, alternate arching and rounding spine slowly. 8–10 cycles.',secs:45}
+];
+
+const ICE_HEAT = [
+  {situation:'Post-OTF or post-run (acute soreness, no injury)',protocol:'Ice pack or cold water on most sore area for 15–20 min within 2 hrs post-workout.'},
+  {situation:'Day-2 DOMS (deep soreness, no swelling)',protocol:'Moist heat pad or warm shower 15–20 min. Follow with light movement and stretching.'},
+  {situation:'Achilles or plantar fascia tightness',protocol:'Ice 15 min after running; heat 10 min before running. Contrast therapy 2–3 cycles for chronic tightness.'},
+  {situation:'General muscle tension after hospital shift',protocol:'Warm shower or heating pad on lower back and calves 15–20 min before bed. Also reduces cortisol and may improve reflux.'},
+  {situation:'Epsom Salt Bath',protocol:'2 cups in warm (not hot) bath, soak 15–20 min. Reduces DOMS, cortisol, and muscle cramps. Use 1–2× per week on hardest days.'}
+];
+
+const LYMPH_STEPS = [
+  {name:'Activate Lymph Nodes',how:'Begin at the groin. Flat palms, gentle C-shaped pumping strokes toward groin. Very light pressure — lighter than you think.',dur:'30s each side',secs:60},
+  {name:'Thigh Drainage',how:'Both hands loosely around one thigh, stroke upward from knee toward groin. Move up in sections.',dur:'60s each leg',secs:120},
+  {name:'Knee Clearance',how:'Gentle circular strokes around back and sides of knee toward the crease. Clears pooled fluid from the popliteal node.',dur:'30s each knee',secs:60},
+  {name:'Calf Drainage',how:'Wrap hands around calf, stroke upward from ankle toward knee. Gentle, rhythmic — not a massage.',dur:'60s each calf',secs:120},
+  {name:'Foot & Ankle',how:'Gentle strokes from top of foot toward ankle, then ankle toward calf. Circles around the ankle bone.',dur:'30s each foot',secs:60},
+  {name:'Elevation Finish',how:'Elevate legs against wall or on pillows 5–10 min. Combine with left lateral sleeping position to reduce nighttime acid reflux.',dur:'5–10 min',secs:null}
+];
+
+const SLEEP_TIPS = [
+  {icon:'🛏️',title:'Left Lateral Sleep Position',detail:'Consistently reduces nighttime acid reflux by positioning the esophagus above the stomach. Use a wedge pillow or extra pillow to maintain this.'},
+  {icon:'⏰',title:'Consistent Wake Time',detail:'A consistent wake time is more important than consistent bedtime for circadian regulation — even on post-call days.'},
+  {icon:'🌑',title:'Blackout Curtains + Phone Silent',detail:'Light and sound are the #1 disruptors of deep sleep. Protect sleep windows aggressively post-call.'},
+  {icon:'🧘',title:'5-Min Diaphragmatic Breathing',detail:'4 in, hold 2, 6 out — done 2–3×/day measurably lowers cortisol. Before bed and after arriving home from a shift.'},
+  {icon:'🚶',title:'10-Min Post-Shift Walk Outside',detail:'Natural light exposure after a shift resets cortisol and signals the nervous system to begin recovery mode.'},
+  {icon:'🌙',title:'No Intense Training Post-Call',detail:'Swap intense training for a 20-min swim, walk, or full rest on post-call days. One rest day does NOT cause muscle loss.'},
+  {icon:'🍚',title:'Approved Late-Night Snack',detail:'If you truly need something after 8pm: rice cakes + almond butter (~150 cal). Pre-log the afternoon sweet treat to prevent this.'}
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let DATA = null;
+let todayKey = WEEK_MAP[new Date().getDay()];
+let selectedMealDay = todayKey;
+let checkedMeals = {};
+let checkedExercises = {};
+let timerSecs = 45, timerRunning = false, timerInterval = null;
+let stretchTimers = {}, lymphTimers = {};
+
+// ─── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    checkedMeals = JSON.parse(localStorage.getItem('wRx_meals') || '{}');
+    checkedExercises = JSON.parse(localStorage.getItem('wRx_exs') || '{}');
+
+    // Clear checks if it's a new day
+    const lastDay = localStorage.getItem('wRx_lastDay');
+    const nowDay = new Date().toDateString();
+    if (lastDay !== nowDay) {
+      checkedMeals = {};
+      checkedExercises = {};
+      localStorage.setItem('wRx_meals', '{}');
+      localStorage.setItem('wRx_exs', '{}');
+      localStorage.setItem('wRx_lastDay', nowDay);
+    }
+
+    const res = await fetch('data.json?v=' + Date.now());
+    DATA = await res.json();
+  } catch(e) {
+    // Fallback: show error state
+    document.getElementById('loading').innerHTML =
+      '<div style="color:var(--red);font-family:var(--mono);font-size:13px;text-align:center;padding:20px">Could not load data.json<br><br>Make sure the file is in the same folder as index.html</div>';
+    return;
+  }
+
+  renderToday();
+  renderMeals();
+  renderMove();
+  renderRecover();
+  renderSafe();
+  registerSW();
+
+  const loader = document.getElementById('loading');
+  loader.classList.add('hidden');
+  setTimeout(() => loader.remove(), 500);
+}
+
+// ─── TODAY ─────────────────────────────────────────────────────────────────────
+function renderToday() {
+  const d = DATA.days[todayKey];
+  document.getElementById('today-title').textContent = d.label;
+  document.getElementById('today-subtitle').textContent =
+    new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+
+  // Week banner
+  document.getElementById('week-banner-today').innerHTML = weekBannerHTML();
+
+  // Hero
+  document.getElementById('today-hero').innerHTML = `
+    <div class="hero-date">${new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}</div>
+    <div class="hero-day">${d.label}</div>
+    <div class="hero-type">${d.type}</div>
+    <div class="hero-cals">
+      <span class="big-num">${d.calories}</span><span class="unit">cal</span>
+      <span class="divider-v">|</span>
+      <span class="prot-num">${d.protein}</span><span class="unit">g protein</span>
+    </div>`;
+
+  // Macros
+  document.getElementById('today-macros').innerHTML = `
+    <div class="macro-card cal"><div class="mv">${d.calories}</div><div class="mu">kcal</div><div class="ml">Calories</div></div>
+    <div class="macro-card prot"><div class="mv">${d.protein}g</div><div class="mu">target</div><div class="ml">Protein</div></div>
+    <div class="macro-card type"><div class="mv" style="font-size:13px;color:var(--blue)">${d.calories===1700?'Active':'Rest'}</div><div class="mu"></div><div class="ml">Day Type</div></div>`;
+
+  // Timeline
+  document.getElementById('today-timeline').innerHTML = d.meals.map(m => {
+    const done = checkedMeals[m.id] ? 'done' : '';
+    return `<div class="tli">
+      <div class="tl-dot ${done}">${done ? '✓' : m.emoji}</div>
+      <div class="tl-content">
+        <div class="tl-time">${m.time}</div>
+        <div class="tl-name">${m.name}</div>
+        <div class="tl-recipe">${m.recipe}</div>
+      </div>
+      <div class="tl-cals">${m.cal} cal</div>
+    </div>`;
+  }).join('');
+
+  // Recovery
+  document.getElementById('today-recovery').innerHTML = `
+    <div class="icon">${d.recoveryIcon}</div>
+    <div class="r-text">
+      <div class="r-label">Tonight</div>
+      <div class="r-name">${d.recovery}</div>
+      <div class="r-time">${d.recoveryTime}</div>
+    </div>`;
+}
+
+// ─── MEALS ────────────────────────────────────────────────────────────────────
+function renderMeals() {
+  document.getElementById('week-banner-meals').innerHTML = weekBannerHTML();
+  renderDayPicker();
+  renderMealDay(selectedMealDay);
+}
+
+function renderDayPicker() {
+  document.getElementById('day-picker').innerHTML = DAYS_ORDER.map(k => {
+    const isToday = k === todayKey;
+    const isSelected = k === selectedMealDay;
+    const cls = ['day-pill', isSelected ? 'active' : '', isToday ? 'today-pill' : ''].filter(Boolean).join(' ');
+    const todayDot = isToday ? ' ·' : '';
+    return `<button class="${cls}" onclick="selectMealDay('${k}')">${DAY_SHORT[k]}${todayDot}</button>`;
+  }).join('');
+}
+
+function selectMealDay(key) {
+  selectedMealDay = key;
+  renderDayPicker();
+  renderMealDay(key);
+  document.getElementById('views').scrollTop = 0;
+}
+
+function renderMealDay(key) {
+  const d = DATA.days[key];
+  const isToday = key === todayKey;
+
+  document.getElementById('meals-title').textContent = `${d.label}'s Meals`;
+  document.getElementById('meals-subtitle').textContent = `${d.calories} cal · ${d.protein}g protein`;
+
+  // Viewing-other-day banner
+  document.getElementById('viewing-banner-wrap').innerHTML = isToday ? '' :
+    `<div class="viewing-banner">👁 Viewing ${d.label} — ${d.type}</div>`;
+
+  // Progress (only meaningful for today)
+  if (isToday) {
+    const eaten = d.meals.filter(m => checkedMeals[m.id]);
+    const calE = eaten.reduce((s,m) => s + m.cal, 0);
+    const protE = eaten.reduce((s,m) => s + m.protein, 0);
+    const calPct = Math.min(100, Math.round(calE / d.calories * 100));
+    const protPct = Math.min(100, Math.round(protE / parseInt(d.protein) * 100));
+    document.getElementById('macro-progress').style.display = '';
+    document.getElementById('macro-progress').innerHTML = `
+      <div class="progress-row">
+        <div class="progress-labels"><span class="p-name">Calories eaten</span><span class="p-val">${calE} / ${d.calories}</span></div>
+        <div class="progress-track"><div class="progress-fill cal" style="width:${calPct}%"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-labels"><span class="p-name">Protein eaten</span><span class="p-val">${protE} / ${d.protein}g</span></div>
+        <div class="progress-track"><div class="progress-fill prot" style="width:${protPct}%"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-labels"><span class="p-name">Carbs target</span><span class="p-val">${d.carbs}g</span></div>
+        <div class="progress-track"><div class="progress-fill carb" style="width:100%"></div></div>
+      </div>`;
+  } else {
+    document.getElementById('macro-progress').style.display = 'none';
+  }
+
+  // Meal cards
+  document.getElementById('meals-list').innerHTML = d.meals.map(m => {
+    const done = isToday && checkedMeals[m.id];
+    const checkable = isToday;
+    const treatBadge = m.isTreat ? `<span class="badge amber" style="margin-left:6px">Treat</span>` : '';
+    const noteHtml = m.note ? `<div class="meal-note">⏰ ${m.note}</div>` : '';
+    const checkHtml = checkable
+      ? `<div class="meal-check" onclick="checkMeal(event,'${m.id}')">${done ? '✓' : ''}</div>`
+      : `<div style="width:32px;text-align:center;font-size:18px;flex-shrink:0">${m.emoji}</div>`;
+    return `<div class="meal-card ${done ? 'done' : ''}" id="mc-${m.id}">
+      <div class="meal-card-header" onclick="toggleMealCard('${m.id}')">
+        ${checkHtml}
+        <div class="meal-info">
+          <div class="meal-name">${m.name}${treatBadge}</div>
+          <div class="meal-recipe">${m.recipe}</div>
+          <div class="meal-time">${m.time}</div>
+        </div>
+        <div class="meal-stats">
+          <div class="meal-cal">${m.cal}</div>
+          <div class="meal-prot">${m.protein}g</div>
+        </div>
+        <span class="meal-expand">⌄</span>
+      </div>
+      <div class="meal-details">
+        <ul class="ingredient-list">
+          ${m.ingredients.map(i => `<li>${i}</li>`).join('')}
+        </ul>
+        ${noteHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMealCard(id) {
+  const card = document.getElementById('mc-' + id);
+  card.classList.toggle('open');
+  card.querySelector('.meal-details').style.display = card.classList.contains('open') ? 'block' : 'none';
+}
+
+function checkMeal(e, id) {
+  e.stopPropagation();
+  checkedMeals[id] = !checkedMeals[id];
+  localStorage.setItem('wRx_meals', JSON.stringify(checkedMeals));
+  renderMealDay(selectedMealDay);
+  renderToday();
+  if (navigator.vibrate) navigator.vibrate(30);
+}
+
+// ─── MOVE ──────────────────────────────────────────────────────────────────────
+function renderMove() {
+  const d = DATA.days[todayKey];
+  const w = d.workout;
+  document.getElementById('move-subtitle').textContent = `${d.type} — ${w.duration}`;
+  document.getElementById('workout-hero-wrap').innerHTML = `
+    <div class="workout-hero">
+      <div class="workout-tag">${w.type}</div>
+      <div class="workout-name">${w.name}</div>
+      <div class="workout-meta">
+        <div class="wm-item"><div class="wm-val">${w.duration}</div><div class="wm-label">Duration</div></div>
+        <div class="wm-item"><div class="wm-val">${w.targetHR}</div><div class="wm-label">Target HR</div></div>
+        <div class="wm-item"><div class="wm-val">${w.exercises.length}</div><div class="wm-label">Exercises</div></div>
+      </div>
+    </div>`;
+  document.getElementById('ex-section-label').textContent =
+    w.type.toLowerCase().includes('swim') ? 'Swim Sets' : 'Exercises';
+  document.getElementById('exercise-list').innerHTML = w.exercises.map((ex, i) => {
+    const id = `${todayKey}-${i}`;
+    const done = checkedExercises[id];
+    return `<div class="exercise-item ${done ? 'done' : ''}" onclick="checkExercise('${id}')">
+      <div class="ex-row">
+        <div class="ex-check">${done ? '✓' : ''}</div>
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-sets">${ex.sets}</div>
+      </div>
+      <div class="ex-cue">${ex.cue}</div>
+    </div>`;
+  }).join('');
+}
+
+function checkExercise(id) {
+  checkedExercises[id] = !checkedExercises[id];
+  localStorage.setItem('wRx_exs', JSON.stringify(checkedExercises));
+  renderMove();
+  if (navigator.vibrate) navigator.vibrate(30);
+}
+
+// ─── REST TIMER ────────────────────────────────────────────────────────────────
+function setTimer(s) { resetTimer(); timerSecs = s; updateTimerDisplay(); }
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval); timerRunning = false;
+    document.getElementById('timer-btn').textContent = 'Start';
+    document.getElementById('timer-display').classList.remove('running');
+  } else {
+    timerRunning = true;
+    document.getElementById('timer-btn').textContent = 'Pause';
+    document.getElementById('timer-display').classList.add('running');
+    timerInterval = setInterval(() => {
+      timerSecs--;
+      updateTimerDisplay();
+      if (timerSecs <= 0) {
+        clearInterval(timerInterval); timerRunning = false;
+        document.getElementById('timer-btn').textContent = 'Start';
+        document.getElementById('timer-display').classList.remove('running','done');
+        document.getElementById('timer-display').classList.add('done');
+        document.getElementById('timer-display').textContent = 'GO!';
+        if (navigator.vibrate) navigator.vibrate([100,50,100,50,200]);
+        setTimeout(() => {
+          document.getElementById('timer-display').classList.remove('done');
+          timerSecs = 45; updateTimerDisplay();
+        }, 2000);
+      }
+    }, 1000);
+  }
+}
+function resetTimer() {
+  clearInterval(timerInterval); timerRunning = false; timerSecs = 45;
+  document.getElementById('timer-btn').textContent = 'Start';
+  document.getElementById('timer-display').className = 'timer-display';
+  updateTimerDisplay();
+}
+function updateTimerDisplay() {
+  const m = Math.floor(timerSecs/60), s = timerSecs%60;
+  document.getElementById('timer-display').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+// ─── RECOVER ───────────────────────────────────────────────────────────────────
+function renderRecover() {
+  renderStretchSection('stretches-lower', STRETCHES_LOWER, 'sl');
+  renderStretchSection('stretches-upper', STRETCHES_UPPER, 'su');
+  document.getElementById('iceheat-list').innerHTML = ICE_HEAT.map(ih =>
+    `<div class="ih-item"><div class="ih-situation">${ih.situation}</div><div class="ih-protocol">${ih.protocol}</div></div>`
+  ).join('');
+  document.getElementById('lymph-list').innerHTML = LYMPH_STEPS.map((s, i) => {
+    const hasTimer = s.secs !== null;
+    const timerBtn = hasTimer
+      ? `<button class="stretch-time-btn" id="ltb-${i}" onclick="startLymphTimer(${i},${s.secs})">${s.dur}</button>`
+      : '';
+    return `<div class="lymph-step" id="ls-${i}">
+      <div class="lymph-num">${i+1}</div>
+      <div class="lymph-content">
+        <div class="lymph-name"><span>${s.name}</span>${timerBtn}</div>
+        <div class="lymph-how">${s.how}</div>
+        <div class="lymph-dur">${s.dur}</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('sleep-list').innerHTML = SLEEP_TIPS.map(s =>
+    `<div class="ih-item"><div class="ih-situation">${s.icon} ${s.title}</div><div class="ih-protocol">${s.detail}</div></div>`
+  ).join('');
+}
+
+function renderStretchSection(containerId, stretches, prefix) {
+  document.getElementById(containerId).innerHTML = stretches.map((s, i) => {
+    const sid = `${prefix}-${i}`;
+    const fmt = sec => `${Math.floor(sec/60)}:${(sec%60).toString().padStart(2,'0')}`;
+    return `<div class="stretch-item" id="si-${sid}">
+      <div class="stretch-row">
+        <div class="stretch-icon">${s.icon}</div>
+        <div class="stretch-info">
+          <div class="stretch-name">${s.name}</div>
+          <div class="stretch-target">${s.target}</div>
+        </div>
+        <button class="stretch-time-btn" id="stb-${sid}" onclick="startStretchTimer('${sid}',${s.secs})">${fmt(s.secs)}</button>
+      </div>
+      <div class="stretch-how">${s.how}</div>
+    </div>`;
+  }).join('');
+}
+
+function startStretchTimer(sid, totalSecs) {
+  if (stretchTimers[sid]) {
+    clearInterval(stretchTimers[sid]);
+    delete stretchTimers[sid];
+    const btn = document.getElementById('stb-'+sid);
+    const m = Math.floor(totalSecs/60), s = totalSecs%60;
+    btn.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    btn.classList.remove('running');
+    document.getElementById('si-'+sid).classList.remove('done');
+    return;
+  }
+  let secs = totalSecs;
+  const btn = document.getElementById('stb-'+sid);
+  const fmt = s => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
+  btn.classList.add('running');
+  const iv = setInterval(() => {
+    secs--;
+    btn.textContent = fmt(secs);
+    if (secs <= 0) {
+      clearInterval(iv); delete stretchTimers[sid];
+      btn.textContent = '✓'; btn.classList.remove('running');
+      document.getElementById('si-'+sid).classList.add('done');
+      if (navigator.vibrate) navigator.vibrate([100,50,100]);
+    }
+  }, 1000);
+  stretchTimers[sid] = iv;
+}
+
+function startLymphTimer(i, totalSecs) {
+  if (lymphTimers[i]) {
+    clearInterval(lymphTimers[i]);
+    delete lymphTimers[i];
+    const btn = document.getElementById('ltb-'+i);
+    btn.textContent = LYMPH_STEPS[i].dur;
+    btn.classList.remove('running');
+    document.getElementById('ls-'+i).classList.remove('done');
+    return;
+  }
+  let secs = totalSecs;
+  const btn = document.getElementById('ltb-'+i);
+  const fmt = s => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
+  btn.classList.add('running');
+  btn.textContent = fmt(secs);
+  const iv = setInterval(() => {
+    secs--;
+    btn.textContent = fmt(secs);
+    if (secs <= 0) {
+      clearInterval(iv); delete lymphTimers[i];
+      btn.textContent = '✓'; btn.classList.remove('running');
+      document.getElementById('ls-'+i).classList.add('done');
+      if (navigator.vibrate) navigator.vibrate([100,50,100]);
+    }
+  }, 1000);
+  lymphTimers[i] = iv;
+}
+
+function switchRecoverTab(tab, btn) {
+  document.querySelectorAll('.recover-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.r-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('rp-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── SAFE ──────────────────────────────────────────────────────────────────────
+function renderSafe() { filterFoods(''); }
+function filterFoods(q) {
+  const lq = q.trim().toLowerCase();
+  const filtered = lq ? FOODS.filter(f => f.name.toLowerCase().includes(lq) || (f.note&&f.note.toLowerCase().includes(lq))) : FOODS;
+  document.getElementById('food-list').innerHTML = filtered.length === 0
+    ? `<div class="empty-search">No results for "${q}"</div>`
+    : filtered.map(f => `<div class="food-item">
+        <div class="food-status ${f.status}"></div>
+        <div class="food-info">
+          <div class="food-name">${f.name}</div>
+          <div class="food-note">${f.note}</div>
+          ${f.swap ? `<div class="food-swap">→ ${f.swap}</div>` : ''}
+        </div>
+      </div>`).join('');
+}
+
+// ─── HELPERS ───────────────────────────────────────────────────────────────────
+function weekBannerHTML() {
+  if (!DATA || !DATA.meta) return '';
+  const d = new Date(DATA.meta.weekOf + 'T12:00:00');
+  const label = d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  return `<div class="week-banner">
+    <div>
+      <div class="wb-label">Week of</div>
+      <div class="wb-week">${label}</div>
+      ${DATA.meta.note ? `<div class="wb-note">${DATA.meta.note}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function switchView(view, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('v-'+view).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('views').scrollTop = 0;
+}
+
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('collapsed');
+  header.querySelector('.meal-expand').style.transform = body.classList.contains('collapsed') ? '' : 'rotate(180deg)';
+}
+
+// ─── SERVICE WORKER ─────────────────────────────────────────────────────────
+function registerSW() {
+  if (!('serviceWorker' in navigator)) return;
+  const sw = `
+const V = 'wRx-v2';
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(V).then(c => c.addAll(['./','./index.html','./data.json'])));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
+self.addEventListener('fetch', e => {
+  if (e.request.url.includes('data.json')) {
+    e.respondWith(fetch(e.request).then(r => {
+      const clone = r.clone();
+      caches.open(V).then(c => c.put(e.request, clone));
+      return r;
+    }).catch(() => caches.match(e.request)));
+  } else {
+    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+  }
+});`;
+  const blob = new Blob([sw], {type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+
+// ─── START ────────────────────────────────────────────────────────────────────
+boot();
+</script>
+</body>
+</html>
