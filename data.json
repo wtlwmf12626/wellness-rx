@@ -1,9 +1,9 @@
 {
   "meta": {
-    "weekOf": "2026-03-23",
+    "weekOf": "2026-04-07",
     "goal": "125–130 lbs",
     "currentWeight": 141,
-    "note": "Week of March 23 — chicken breast featured all week; meatless Fridays through Easter (April 5); salmon on Wednesday. Hit protein at every meal."
+    "note": "Week of April 7 — leftovers featured early in the week; long run Sunday; hit protein at every meal and finish dinner 2.5–3 hrs before bed."
   },
   "days": {
     "monday": {
@@ -19,16 +19,32 @@
         "duration": "60 min",
         "targetHR": "75–90%",
         "exercises": [
-          { "name": "Full OrangeTheory Class", "sets": "60 min", "cue": "Heart rate zone training. Push during all-out intervals — this is your primary fat-burn session." },
-          { "name": "Focus: Treadmill Sprints", "sets": "In-class", "cue": "Max effort on all-out pushes. Recover fully during base paces." },
-          { "name": "Focus: Rower Intervals", "sets": "In-class", "cue": "Drive with legs first, then hinge back, then pull arms. Full power on each stroke." }
+          {
+            "name": "Full OrangeTheory Class",
+            "sets": "60 min",
+            "cue": "Heart rate zone training. Push during all-out intervals — this is your primary fat-burn session."
+          },
+          {
+            "name": "Focus: Treadmill Sprints",
+            "sets": "In-class",
+            "cue": "Max effort on all-out pushes. Recover fully during base paces."
+          },
+          {
+            "name": "Focus: Rower Intervals",
+            "sets": "In-class",
+            "cue": "Drive with legs first, then hinge back, then pull arms. Full power on each stroke."
+          }
         ]
       },
       "meals": [
         {
-          "id": "mon-b", "name": "Breakfast", "time": "7:00 AM", "emoji": "🥚",
+          "id": "mon-b",
+          "name": "Breakfast",
+          "time": "7:00 AM",
+          "emoji": "🥚",
           "recipe": "Savory Egg & Veggie Scramble",
-          "cal": 520, "protein": 40,
+          "cal": 520,
+          "protein": 40,
           "ingredients": [
             "3 eggs scrambled with spinach, bell pepper, garlic",
             "1 slice whole grain toast",
@@ -38,33 +54,46 @@
           ]
         },
         {
-          "id": "mon-l", "name": "Lunch", "time": "12:00 PM", "emoji": "🥗",
+          "id": "mon-l",
+          "name": "Lunch",
+          "time": "12:00 PM",
+          "emoji": "🥗",
           "recipe": "Turkey Power Bowl",
-          "cal": 560, "protein": 45,
+          "cal": 550,
+          "protein": 45,
+          "hospital_safe": true,
           "ingredients": [
             "4 oz sliced turkey breast",
             "Quinoa + romaine + cucumber + shredded carrots + feta",
-            "Olive oil & herb dressing (parsley, dill, garlic)",
-            "1 small whole wheat pita"
+            "Olive oil & herb dressing (parsley, dill, garlic)"
           ]
         },
         {
-          "id": "mon-t", "name": "Sweet Treat", "time": "3:00 PM", "emoji": "🍫",
+          "id": "mon-t",
+          "name": "Sweet Treat",
+          "time": "3:00 PM",
+          "emoji": "🍫",
           "recipe": "Dark Chocolate & Almonds",
-          "cal": 180, "protein": 4, "isTreat": true,
+          "cal": 180,
+          "protein": 4,
+          "isTreat": true,
           "ingredients": [
             "2 squares dark chocolate (70%+)",
             "10 almonds"
           ]
         },
         {
-          "id": "mon-d", "name": "Dinner", "time": "6:30 PM", "emoji": "🐟",
+          "id": "mon-d",
+          "name": "Dinner",
+          "time": "6:30 PM",
+          "emoji": "🐟",
           "recipe": "Baked Herb-Crusted Salmon",
-          "cal": 540, "protein": 40,
+          "cal": 450,
+          "protein": 40,
           "note": "Finish 2.5–3 hrs before bed",
           "ingredients": [
-            "5 oz baked herb-crusted salmon",
-            "Roasted asparagus",
+            "5 oz baked salmon with fresh dill, parsley, garlic",
+            "Roasted zucchini",
             "½ cup brown rice",
             "¼ avocado"
           ]
@@ -76,29 +105,63 @@
     },
     "tuesday": {
       "label": "Tuesday",
-      "type": "Outdoor Run Day",
+      "type": "Home Workout Day",
       "calories": 1700,
       "protein": "125–140",
       "carbs": 175,
       "fats": 60,
       "workout": {
-        "name": "Outdoor Hill Run + Circuit A",
-        "type": "Cardio + Strength",
-        "duration": "50 min",
-        "targetHR": "65–80%",
+        "name": "Home Strength — Lower Body & Glutes",
+        "type": "Strength Training",
+        "duration": "40 min",
+        "targetHR": "60–75%",
         "exercises": [
-          { "name": "Outdoor Hill Run", "sets": "35–45 min", "cue": "Easy-moderate pace with natural hill variation. Aerobic base building." },
-          { "name": "Goblet Squat", "sets": "3 × 12", "cue": "Chest up, knees tracking over toes. Increase weight weekly." },
-          { "name": "Romanian Deadlift", "sets": "3 × 10", "cue": "Hinge at hips, soft knee bend, flat back. Feel hamstrings loading." },
-          { "name": "Seated Cable Row", "sets": "3 × 12", "cue": "Squeeze shoulder blades at end of pull. Corrects hospital posture." },
-          { "name": "Dead Bug (core)", "sets": "3 × 8 each side", "cue": "Low back stays pressed to floor. Extend opposite arm/leg slowly." }
+          {
+            "name": "Med Ball Goblet Squat (20 lbs)",
+            "sets": "4 × 12",
+            "cue": "Hold med ball at chest, chest up, knees tracking over toes. Sit back into the squat."
+          },
+          {
+            "name": "Walking Lunges (10 lb dumbbells)",
+            "sets": "3 × 12 each leg",
+            "cue": "Step long, 90-degree knee angle. Torso upright. Great for running strength."
+          },
+          {
+            "name": "Resistance Band Glute Bridge",
+            "sets": "3 × 15",
+            "cue": "Band above knees, drive through heels, full hip extension at top. Squeeze glutes hard."
+          },
+          {
+            "name": "Single-Leg Hip Thrust (off couch/bed)",
+            "sets": "3 × 10 each leg",
+            "cue": "Upper back on surface, drive through heel, full hip extension. Glute isolation."
+          },
+          {
+            "name": "Med Ball Sumo Squat (20 lbs)",
+            "sets": "3 × 12",
+            "cue": "Wide stance, toes out, hold med ball low. Targets inner thighs and glutes."
+          },
+          {
+            "name": "Resistance Band Clamshell",
+            "sets": "3 × 20 each side",
+            "cue": "Band above knees, side-lying. Open like a clamshell. Fires hip abductors — protects knees during runs."
+          },
+          {
+            "name": "Standing Calf Raises",
+            "sets": "3 × 20",
+            "cue": "Full range of motion. Pause at top. Reduces calf tightness from long shifts and running."
+          }
         ]
       },
       "meals": [
         {
-          "id": "tue-b", "name": "Breakfast", "time": "7:00 AM", "emoji": "🥣",
+          "id": "tue-b",
+          "name": "Breakfast",
+          "time": "7:00 AM",
+          "emoji": "🥣",
           "recipe": "Warm Oat Bowl",
-          "cal": 490, "protein": 38,
+          "cal": 490,
+          "protein": 38,
           "ingredients": [
             "½ cup rolled oats cooked in water or almond milk",
             "1 scoop vanilla protein powder (stirred in)",
@@ -108,117 +171,154 @@
           ]
         },
         {
-          "id": "tue-l", "name": "Lunch", "time": "12:00 PM", "emoji": "🌯",
-          "recipe": "Grilled Chicken Wrap",
-          "cal": 570, "protein": 43,
+          "id": "tue-l",
+          "name": "Lunch",
+          "time": "12:00 PM",
+          "emoji": "🥑",
+          "recipe": "Tuna & Avocado Bowl",
+          "cal": 490,
+          "protein": 40,
+          "hospital_safe": true,
           "ingredients": [
-            "4 oz grilled chicken breast",
-            "Romaine + cucumber + hummus + shredded carrot",
-            "Whole wheat tortilla",
-            "1 pear on the side"
+            "1 can tuna in water, mixed with plain Greek yogurt + celery + Dijon mustard + fresh dill",
+            "Mixed greens + sliced cucumber",
+            "½ avocado"
           ]
         },
         {
-          "id": "tue-t", "name": "Sweet Treat", "time": "3:00 PM", "emoji": "🥤",
-          "recipe": "Protein Smoothie Dessert",
-          "cal": 210, "protein": 22, "isTreat": true,
+          "id": "tue-t",
+          "name": "Sweet Treat",
+          "time": "3:00 PM",
+          "emoji": "🫐",
+          "recipe": "Greek Yogurt Bark with Blueberries",
+          "cal": 180,
+          "protein": 10,
+          "isTreat": true,
           "ingredients": [
-            "½ cup plain Greek yogurt",
-            "⅓ cup cottage cheese (blended)",
-            "Frozen strawberries",
-            "1 tsp honey",
-            "¼ cup almond milk"
+            "½ cup plain Greek yogurt spread on parchment",
+            "Fresh blueberries",
+            "Drizzle of dark chocolate",
+            "Freeze 1 hr before eating"
           ]
         },
         {
-          "id": "tue-d", "name": "Dinner", "time": "6:30 PM", "emoji": "🍲",
-          "recipe": "Turkey & Lentil Soup",
-          "cal": 580, "protein": 42,
-          "note": "Finish 3 hrs before bed",
+          "id": "tue-d",
+          "name": "Dinner",
+          "time": "6:30 PM",
+          "emoji": "🥩",
+          "recipe": "Sliced Rib Roast with Roasted Asparagus",
+          "cal": 540,
+          "protein": 40,
+          "note": "Finish 2.5–3 hrs before bed",
           "ingredients": [
-            "5 oz ground turkey",
-            "2 cups broth + canned lentils",
-            "Diced carrots + celery + garlic",
-            "Cumin & herbs",
-            "2 slices whole grain bread"
+            "4 oz sliced leftover rib roast (reheated gently)",
+            "Roasted asparagus with olive oil + garlic + fresh thyme",
+            "Cauliflower rice sautéed with garlic"
           ]
         }
       ],
-      "recovery": "Full stretch routine — calf/hamstring focus",
+      "recovery": "Full stretch routine — lower body + hamstring focus",
       "recoveryTime": "12 min",
       "recoveryIcon": "🦵"
     },
     "wednesday": {
       "label": "Wednesday",
-      "type": "Rest / Swim Day",
-      "calories": 1550,
-      "protein": "125–130",
-      "carbs": 150,
-      "fats": 50,
+      "type": "Run Day",
+      "calories": 1700,
+      "protein": "125–140",
+      "carbs": 175,
+      "fats": 60,
       "workout": {
-        "name": "YMCA Lap Swimming — Workout 1",
-        "type": "Aerobic Endurance",
-        "duration": "35–40 min",
-        "targetHR": "60–70%",
+        "name": "Outdoor Run",
+        "type": "Cardio — Aerobic Base",
+        "duration": "35–45 min",
+        "targetHR": "65–80%",
         "exercises": [
-          { "name": "Warm-Up: 4 × 50 yds", "sets": "200 yds", "cue": "Easy freestyle. Long strokes, exhale fully underwater. 15 sec rest." },
-          { "name": "Kick Set: 4 × 25 yds", "sets": "100 yds", "cue": "Kickboard flutter kick. Engages core and legs. 20 sec rest." },
-          { "name": "Main Set 1: 4 × 100 yds", "sets": "400 yds", "cue": "Freestyle at moderate effort. Consistent splits. 20 sec rest." },
-          { "name": "Main Set 2: 2 × 150 yds", "sets": "300 yds", "cue": "Steady freestyle. Add backstroke for shoulder relief. 30 sec rest." },
-          { "name": "Pull Set: 4 × 50 yds", "sets": "200 yds", "cue": "Pull buoy between thighs. Upper body isolation. 15 sec rest." },
-          { "name": "Cool-Down: 4 × 25 yds", "sets": "100 yds", "cue": "Very easy freestyle or backstroke. Focus on breath." },
-          { "name": "Float Rest", "sets": "5 min", "cue": "Float on your back. Zero effort. Cortisol reset — do not skip this." }
+          {
+            "name": "Outdoor Run — Easy-Moderate Pace",
+            "sets": "35–45 min",
+            "cue": "Natural hill variation. Aerobic base building. Comfortable conversational pace."
+          },
+          {
+            "name": "Hip Flexor Stretch",
+            "sets": "60 sec each side",
+            "cue": "After run — kneeling lunge, tuck pelvis, lean forward. Counters hospital standing."
+          },
+          {
+            "name": "Calf & Achilles Stretch",
+            "sets": "60 sec each side",
+            "cue": "Hands on wall, straight-knee then bent-knee version. Prevents shin splints."
+          }
         ]
       },
       "meals": [
         {
-          "id": "wed-b", "name": "Breakfast", "time": "7:00 AM", "emoji": "🍳",
-          "recipe": "Egg & Sweet Potato Scramble",
-          "cal": 430, "protein": 40,
+          "id": "wed-b",
+          "name": "Breakfast",
+          "time": "7:00 AM",
+          "emoji": "🍳",
+          "recipe": "Ham & Egg Scramble",
+          "cal": 490,
+          "protein": 42,
           "ingredients": [
-            "3 eggs + 2 egg whites scrambled with spinach + roasted bell pepper + garlic",
-            "½ cup diced roasted sweet potato (pre-cooked)",
-            "1 tsp olive oil",
-            "½ cup plain Greek yogurt with raspberries + drizzle of honey"
+            "3 oz sliced spiral ham (leftover)",
+            "3 eggs scrambled with spinach + bell pepper + garlic",
+            "1 slice whole grain toast",
+            "1 tsp olive oil"
           ]
         },
         {
-          "id": "wed-l", "name": "Lunch", "time": "12:00 PM", "emoji": "🥗",
-          "recipe": "Chicken Caesar-Style Farro Bowl",
-          "cal": 490, "protein": 42,
+          "id": "wed-l",
+          "name": "Lunch",
+          "time": "12:00 PM",
+          "emoji": "🥗",
+          "recipe": "Salmon & Grain Bowl",
+          "cal": 540,
+          "protein": 44,
+          "hospital_safe": true,
           "ingredients": [
-            "4 oz grilled chicken breast, sliced",
+            "4 oz canned or cooked salmon",
             "½ cup farro",
-            "Romaine + cucumber + shaved parmesan (small amount)",
-            "Olive oil + Dijon + fresh dill dressing",
-            "Sunflower seeds for crunch"
+            "Diced cucumber + shredded purple cabbage + edamame",
+            "Sesame-ginger dressing (low sodium, no citrus)"
           ]
         },
         {
-          "id": "wed-t", "name": "Sweet Treat", "time": "3:00 PM", "emoji": "🍫",
-          "recipe": "Dark Chocolate & Almonds",
-          "cal": 160, "protein": 4, "isTreat": true,
+          "id": "wed-t",
+          "name": "Sweet Treat",
+          "time": "3:00 PM",
+          "emoji": "🍌",
+          "recipe": "Frozen Banana Nice Cream",
+          "cal": 200,
+          "protein": 4,
+          "isTreat": true,
           "ingredients": [
-            "2 squares dark chocolate (70%+)",
-            "10 almonds"
+            "1 frozen banana blended",
+            "1 tsp cocoa powder",
+            "1 tbsp almond butter",
+            "Pinch of sea salt"
           ]
         },
         {
-          "id": "wed-d", "name": "Dinner", "time": "6:30 PM", "emoji": "🐟",
-          "recipe": "Garlic Herb Baked Salmon",
-          "cal": 480, "protein": 40,
-          "note": "Finish 2.5–3 hrs before bed",
+          "id": "wed-d",
+          "name": "Dinner",
+          "time": "7:00 PM",
+          "emoji": "🍽️",
+          "recipe": "Dinner Out with Colleague",
+          "cal": 470,
+          "protein": 35,
+          "note": "Enjoy! Aim for grilled proteins + veggies. Finish eating 2.5–3 hrs before bed.",
           "ingredients": [
-            "5 oz salmon fillet",
-            "Garlic + fresh dill + fresh parsley + olive oil",
-            "Roasted asparagus",
-            "⅓ cup couscous"
+            "Choose grilled fish, chicken, or turkey",
+            "Avoid heavy cream sauces and fried items",
+            "Skip the bread basket if possible",
+            "Still water or herbal tea over sparkling"
           ]
         }
       ],
-      "recovery": "5-min float rest after swim + leg drainage if shift was long",
-      "recoveryTime": "10 min",
-      "recoveryIcon": "🏊"
+      "recovery": "Full stretch routine — calf & hamstring focus",
+      "recoveryTime": "12 min",
+      "recoveryIcon": "🦵"
     },
     "thursday": {
       "label": "Thursday",
@@ -233,278 +333,385 @@
         "duration": "60 min",
         "targetHR": "75–90%",
         "exercises": [
-          { "name": "Full OrangeTheory Class", "sets": "60 min", "cue": "Second OTF of the week. Push harder than Monday if energy allows." },
-          { "name": "Treadmill Intervals", "sets": "In-class", "cue": "Progressive overload applies to cardio too. Beat Monday's effort." },
-          { "name": "Floor Work", "sets": "In-class", "cue": "Focus on form over speed. Floor work is your strength component today." }
+          {
+            "name": "Full OrangeTheory Class",
+            "sets": "60 min",
+            "cue": "Heart rate zone training. Push during all-out intervals."
+          },
+          {
+            "name": "Focus: Treadmill Sprints",
+            "sets": "In-class",
+            "cue": "Max effort on all-out pushes. Recover fully during base paces."
+          },
+          {
+            "name": "Focus: Rower Intervals",
+            "sets": "In-class",
+            "cue": "Drive with legs first, then hinge back, then pull arms. Full power on each stroke."
+          }
         ]
       },
       "meals": [
         {
-          "id": "thu-b", "name": "Breakfast", "time": "7:00 AM", "emoji": "🥤",
-          "recipe": "Blended Power Smoothie + Egg",
-          "cal": 490, "protein": 40,
+          "id": "thu-b",
+          "name": "Breakfast",
+          "time": "7:00 AM",
+          "emoji": "🥤",
+          "recipe": "Blended Protein Smoothie + Hard-Boiled Egg",
+          "cal": 490,
+          "protein": 40,
           "ingredients": [
             "1 scoop protein powder + 1 cup almond milk",
-            "½ frozen banana + 1 tbsp almond butter",
-            "½ cup spinach + 1 tbsp ground flaxseed",
+            "½ frozen banana + 1 tbsp almond butter + ½ cup spinach",
+            "1 tbsp ground flaxseed",
             "1 hard-boiled egg on the side",
             "Ginger tea instead of extra coffee"
           ]
         },
         {
-          "id": "thu-l", "name": "Lunch", "time": "12:00 PM", "emoji": "🦐",
-          "recipe": "Shrimp & Quinoa Bowl",
-          "cal": 540, "protein": 42,
+          "id": "thu-l",
+          "name": "Lunch",
+          "time": "12:00 PM",
+          "emoji": "🍠",
+          "recipe": "Chicken & Sweet Potato Power Plate",
+          "cal": 560,
+          "protein": 44,
+          "hospital_safe": true,
           "ingredients": [
-            "5 oz grilled shrimp",
-            "½ cup quinoa",
-            "Diced cucumber + edamame + shredded purple cabbage",
-            "Sesame-ginger dressing (low sodium, no citrus)",
-            "Fresh parsley garnish"
+            "5 oz grilled chicken breast",
+            "½ medium roasted sweet potato",
+            "Steamed green beans",
+            "Side of hummus + fresh parsley garnish"
           ]
         },
         {
-          "id": "thu-t", "name": "Sweet Treat", "time": "3:00 PM", "emoji": "🍫",
+          "id": "thu-t",
+          "name": "Sweet Treat",
+          "time": "3:00 PM",
+          "emoji": "🍫",
           "recipe": "Dark Chocolate & Almonds",
-          "cal": 180, "protein": 4, "isTreat": true,
+          "cal": 180,
+          "protein": 4,
+          "isTreat": true,
           "ingredients": [
             "2 squares dark chocolate (70%+)",
             "10 almonds"
           ]
         },
         {
-          "id": "thu-d", "name": "Dinner", "time": "6:30 PM", "emoji": "🍗",
-          "recipe": "Sheet Pan Chicken Breast & Veggies",
-          "cal": 490, "protein": 42,
+          "id": "thu-d",
+          "name": "Dinner",
+          "time": "6:30 PM",
+          "emoji": "🍝",
+          "recipe": "Butternut Squash Ravioli with Wilted Spinach",
+          "cal": 470,
+          "protein": 34,
           "note": "Finish 2.5–3 hrs before bed",
           "ingredients": [
-            "5 oz chicken breast",
-            "Roasted zucchini + roasted bell pepper + garlic + olive oil",
-            "Fresh basil + fresh thyme",
-            "½ cup brown rice"
+            "1 serving prepackaged butternut squash ravioli (boil per package)",
+            "Toss with 1 tsp olive oil + 1 clove garlic (sautéed) + fresh sage",
+            "Handful of fresh spinach wilted in the pan",
+            "Small sprinkle of feta",
+            "3 oz grilled turkey breast on the side"
           ]
         }
       ],
-      "recovery": "Ice + stretch + Epsom salt bath if available",
+      "recovery": "Ice sore areas + stretch routine + Epsom salt bath if available",
       "recoveryTime": "15–20 min",
-      "recoveryIcon": "🛁"
+      "recoveryIcon": "🧊"
     },
     "friday": {
       "label": "Friday",
-      "type": "Run Day",
+      "type": "Swim Day",
       "calories": 1700,
       "protein": "125–140",
       "carbs": 175,
       "fats": 60,
       "workout": {
-        "name": "Outdoor Run + Hill Sprints",
-        "type": "Cardio + Speed",
-        "duration": "40 min",
-        "targetHR": "70–85%",
+        "name": "YMCA Swim",
+        "type": "Swim — Workout 1 or 2",
+        "duration": "35–40 min",
+        "targetHR": "65–85%",
         "exercises": [
-          { "name": "Outdoor Run", "sets": "30–40 min", "cue": "Add 3–4 × 30-second hill sprints or Fartlek intervals. Metabolic spike day." },
-          { "name": "Hill Sprint × 4", "sets": "30 sec each", "cue": "All-out effort up the hill. Walk back down fully for recovery." },
-          { "name": "Cool-Down Walk", "sets": "5–10 min", "cue": "Gradual heart rate lowering. Keep moving — don't stop abruptly." }
+          {
+            "name": "Swim Workout 1 — Aerobic Endurance",
+            "sets": "~1,300 yds",
+            "cue": "Steady-state aerobic effort. Heart rate 60–70% max. Excellent fat oxidation."
+          },
+          {
+            "name": "OR Swim Workout 2 — HIIT Swim",
+            "sets": "~1,050 yds",
+            "cue": "High-intensity intervals. 75–85% max HR during work sets. Do on good energy days only."
+          },
+          {
+            "name": "5-Min Float Recovery",
+            "sets": "Post-swim",
+            "cue": "Float on back after workout. Measurably reduces cortisol. Your nervous system reset."
+          }
         ]
       },
       "meals": [
         {
-          "id": "fri-b", "name": "Breakfast", "time": "7:00 AM", "emoji": "🥣",
-          "recipe": "Warm Protein Oat Bowl",
-          "cal": 490, "protein": 40,
+          "id": "fri-b",
+          "name": "Breakfast",
+          "time": "7:00 AM",
+          "emoji": "🥞",
+          "recipe": "Cottage Cheese Pancakes with Berries",
+          "cal": 460,
+          "protein": 36,
           "ingredients": [
-            "½ cup rolled oats cooked in almond milk",
-            "1 scoop vanilla protein powder (stirred in)",
-            "½ cup blueberries",
-            "1 tbsp almond butter",
-            "1 tbsp ground flaxseed"
+            "½ cup cottage cheese blended smooth + 2 eggs + ¼ cup oats + ½ tsp cinnamon + vanilla",
+            "Cook as small pancakes",
+            "Top with fresh berries + 1 tsp maple syrup"
           ]
         },
         {
-          "id": "fri-l", "name": "Lunch", "time": "12:00 PM", "emoji": "🥗",
-          "recipe": "Chickpea & Farro Bowl",
-          "cal": 510, "protein": 30,
+          "id": "fri-l",
+          "name": "Lunch",
+          "time": "12:00 PM",
+          "emoji": "🍤",
+          "recipe": "Shrimp & Chickpea Protein Salad",
+          "cal": 520,
+          "protein": 45,
+          "hospital_safe": true,
           "ingredients": [
-            "½ cup canned chickpeas (rinsed)",
-            "½ cup farro",
-            "Baby spinach + cucumber + feta",
-            "Olive oil + fresh parsley + fresh dill dressing",
-            "Sunflower seeds"
+            "5 oz grilled shrimp",
+            "Mixed greens + chickpeas + cucumber + shredded carrots",
+            "Sunflower seeds + olive oil + fresh parsley + herbs"
           ]
         },
         {
-          "id": "fri-t", "name": "Sweet Treat", "time": "3:00 PM", "emoji": "🫐",
-          "recipe": "Greek Yogurt Bark",
-          "cal": 190, "protein": 10, "isTreat": true,
+          "id": "fri-t",
+          "name": "Sweet Treat",
+          "time": "3:00 PM",
+          "emoji": "🍍",
+          "recipe": "Frozen Pineapple & Coconut Cream",
+          "cal": 160,
+          "protein": 1,
+          "isTreat": true,
           "ingredients": [
-            "½ cup plain Greek yogurt spread on parchment",
-            "Blueberries + drizzle of dark chocolate",
-            "Freeze 1 hour before eating"
+            "½ cup frozen pineapple chunks (leftover — small portions, reflux-safe)",
+            "Small dollop of coconut cream",
+            "Enjoy mid-afternoon, not at bedtime"
           ]
         },
         {
-          "id": "fri-d", "name": "Dinner", "time": "6:30 PM", "emoji": "🍝",
-          "recipe": "Black Bean Lasagna",
-          "cal": 510, "protein": 32,
-          "note": "🌿 Meatless Friday — staying meatless through Easter (April 5). Finish 2.5–3 hrs before bed.",
+          "id": "fri-d",
+          "name": "Dinner",
+          "time": "6:30 PM",
+          "emoji": "🥬",
+          "recipe": "Ground Turkey Lettuce Cups",
+          "cal": 560,
+          "protein": 42,
+          "note": "Finish 2.5–3 hrs before bed",
           "ingredients": [
-            "Your black bean lasagna recipe",
-            "Black beans",
-            "Lasagna noodles",
-            "Ricotta or cottage cheese (blended)",
-            "Roasted bell pepper + zucchini",
-            "Herbs: basil, oregano, thyme"
+            "5 oz ground turkey cooked with garlic + ginger + low-sodium soy sauce + shredded carrots",
+            "Served in butter lettuce cups",
+            "Side of jasmine rice (⅓ cup)"
           ]
         }
       ],
-      "recovery": "Heat on tight areas (day 2) + stretch routine",
+      "recovery": "Heat on tight areas (day 2 DOMS) + stretch routine",
       "recoveryTime": "12 min",
       "recoveryIcon": "🔥"
     },
     "saturday": {
       "label": "Saturday",
-      "type": "OrangeTheory + Strength Day",
+      "type": "Active Recovery — On Call",
+      "calories": 1550,
+      "protein": "125–130",
+      "carbs": 150,
+      "fats": 55,
+      "workout": {
+        "name": "Active Recovery",
+        "type": "Rest — On Call",
+        "duration": "Light movement only",
+        "targetHR": "50–60%",
+        "exercises": [
+          {
+            "name": "Hospital NEAT — Brisk Walking",
+            "sets": "All day",
+            "cue": "Walk with purpose during rounds. Stairs over elevator every time."
+          },
+          {
+            "name": "Calf Raises at Nurses' Station",
+            "sets": "30–60 reps, anytime",
+            "cue": "Zero equipment, zero time cost. Adds up to 100+ extra cal burned."
+          },
+          {
+            "name": "Diaphragmatic Breathing",
+            "sets": "5 slow breaths, 3–4x/day",
+            "cue": "Any 2-min break. Lowers cortisol acutely and soothes GI tract."
+          },
+          {
+            "name": "Shoulder Rolls + Chest Opener",
+            "sets": "30 sec every 30 min charting",
+            "cue": "Counters forward posture from charting. Set a reminder."
+          }
+        ]
+      },
+      "meals": [
+        {
+          "id": "sat-b",
+          "name": "Breakfast",
+          "time": "7:00 AM",
+          "emoji": "🍳",
+          "recipe": "Veggie Egg White Omelet",
+          "cal": 430,
+          "protein": 42,
+          "ingredients": [
+            "5 egg whites + 1 whole egg",
+            "Spinach + bell pepper + 1 tbsp feta",
+            "1 slice whole grain toast",
+            "½ cup Greek yogurt with raspberries + drizzle of honey"
+          ]
+        },
+        {
+          "id": "sat-l",
+          "name": "Lunch",
+          "time": "12:00 PM",
+          "emoji": "🥑",
+          "recipe": "Tuna & Avocado Bowl",
+          "cal": 490,
+          "protein": 40,
+          "hospital_safe": true,
+          "ingredients": [
+            "1 can tuna in water, mixed with plain Greek yogurt + celery + Dijon mustard + fresh dill",
+            "Mixed greens + sliced cucumber",
+            "½ avocado"
+          ]
+        },
+        {
+          "id": "sat-t",
+          "name": "Sweet Treat",
+          "time": "3:00 PM",
+          "emoji": "🍪",
+          "recipe": "Favorite Small Sweet",
+          "cal": 150,
+          "protein": 2,
+          "isTreat": true,
+          "ingredients": [
+            "One small piece of your favorite treat — cookie, chocolate, or bakery item",
+            "Enjoy mindfully mid-afternoon, not at bedtime"
+          ]
+        },
+        {
+          "id": "sat-d",
+          "name": "Dinner",
+          "time": "7:00 PM",
+          "emoji": "🍗",
+          "recipe": "Herb Chicken with Quinoa",
+          "cal": 480,
+          "protein": 38,
+          "note": "Finish 2.5–3 hrs before bed",
+          "ingredients": [
+            "4 oz boneless skinless chicken thighs marinated in olive oil + garlic + fresh herbs",
+            "⅓ cup quinoa",
+            "Sautéed spinach with garlic",
+            "Fennel tea after dinner for digestion"
+          ]
+        }
+      ],
+      "recovery": "Full lymphatic drainage + leg elevation after long shift",
+      "recoveryTime": "10–15 min",
+      "recoveryIcon": "💆"
+    },
+    "sunday": {
+      "label": "Sunday",
+      "type": "Long Run Day",
       "calories": 1700,
       "protein": "125–140",
       "carbs": 175,
       "fats": 60,
       "workout": {
-        "name": "OrangeTheory + Circuit B",
-        "type": "HIIT + Strength",
-        "duration": "60–90 min",
-        "targetHR": "75–85%",
+        "name": "Outdoor Run — Long",
+        "type": "Cardio — Long Slow Distance",
+        "duration": "50–60 min",
+        "targetHR": "60–70%",
         "exercises": [
-          { "name": "OrangeTheory Class", "sets": "60 min", "cue": "Full class. Biggest training day of the week." },
-          { "name": "Barbell Back Squat", "sets": "4 × 8", "cue": "Hip-width stance, sit back not forward, depth to parallel or below." },
-          { "name": "Walking Lunges", "sets": "3 × 12 each leg", "cue": "Step long, 90-degree knee angle. Torso upright." },
-          { "name": "Leg Press Machine", "sets": "3 × 12", "cue": "Feet mid-platform, push through heels. Don't lock knees at top." },
-          { "name": "Nordic Hamstring Curl", "sets": "3 × 8–10", "cue": "Slow eccentric. Protects hamstrings during running." },
-          { "name": "Calf Raises (weighted)", "sets": "3 × 20", "cue": "Full range of motion. Pause at top." }
+          {
+            "name": "Long Slow Run — Easy Pace",
+            "sets": "50–60 min",
+            "cue": "Comfortable conversational pace. This is your deload-style long run — aerobic base and fat oxidation. No sprints today."
+          },
+          {
+            "name": "Post-Run Walk (5 min cool-down)",
+            "sets": "5 min",
+            "cue": "Gradually lower heart rate before stopping. Prevents blood pooling in legs."
+          },
+          {
+            "name": "Full Stretch Routine",
+            "sets": "12 min",
+            "cue": "Figure-4 hip stretch, hamstring, calf, IT band, pigeon. All lower body. Muscles are warm — hold each 30–45 sec."
+          }
         ]
       },
       "meals": [
         {
-          "id": "sat-b", "name": "Breakfast", "time": "7:00 AM", "emoji": "🧁",
-          "recipe": "High-Protein Egg Muffins + Oatmeal",
-          "cal": 490, "protein": 41,
-          "ingredients": [
-            "3 egg muffins (batch prep Sunday)",
-            "6 egg whites + 2 eggs baked with spinach + bell pepper + feta",
-            "½ cup oatmeal with almond milk + 1 tbsp honey + flaxseed"
-          ]
-        },
-        {
-          "id": "sat-l", "name": "Lunch", "time": "12:00 PM", "emoji": "🥩",
-          "recipe": "Korean-Style Ground Beef Bowl",
-          "cal": 540, "protein": 42,
-          "ingredients": [
-            "4 oz lean ground beef",
-            "Bok choy + shredded carrots + garlic + ginger",
-            "Low-sodium soy sauce + sesame oil",
-            "⅓ cup jasmine rice",
-            "Fresh parsley garnish"
-          ]
-        },
-        {
-          "id": "sat-t", "name": "Sweet Treat", "time": "3:00 PM", "emoji": "⚡",
-          "recipe": "Homemade Energy Balls",
-          "cal": 160, "protein": 4, "isTreat": true,
-          "ingredients": [
-            "¼ cup oats",
-            "2 tbsp almond butter + 1 tsp honey",
-            "Dark chocolate chips",
-            "Roll into 2 balls (~80 cal each)"
-          ]
-        },
-        {
-          "id": "sat-d", "name": "Dinner", "time": "7:30 PM", "emoji": "🍗",
-          "recipe": "Herb-Crusted Baked Chicken Breast",
-          "cal": 510, "protein": 43,
-          "note": "Finish eating by 7:30–8pm",
-          "ingredients": [
-            "5 oz chicken breast with breadcrumbs + parsley + garlic + olive oil",
-            "Quinoa salad with cucumber + feta + kalamata olives + olive oil-herb dressing",
-            "Sautéed spinach with garlic"
-          ]
-        }
-      ],
-      "recovery": "Full stretch routine + upper body focus",
-      "recoveryTime": "12 min",
-      "recoveryIcon": "💆"
-    },
-    "sunday": {
-      "label": "Sunday",
-      "type": "Active Recovery / Swim Day",
-      "calories": 1550,
-      "protein": "125–130",
-      "carbs": 150,
-      "fats": 50,
-      "workout": {
-        "name": "Swim HIIT — Workout 2",
-        "type": "Active Recovery",
-        "duration": "30–35 min",
-        "targetHR": "75–85%",
-        "exercises": [
-          { "name": "Warm-Up: 200 yds easy", "sets": "200 yds", "cue": "Relaxed freestyle. Shake out the body." },
-          { "name": "Activation: 4 × 25 yds", "sets": "100 yds", "cue": "Descending pace — 4th is near-sprint. 20 sec rest." },
-          { "name": "Sprint Set 1: 8 × 25 yds", "sets": "200 yds", "cue": "ALL-OUT sprint each 25. This is your treadmill sprint equivalent. 30 sec rest." },
-          { "name": "Active Recovery: 100 yds", "sets": "100 yds", "cue": "Very relaxed backstroke. Let heart rate drop completely." },
-          { "name": "Sprint Set 2: 4 × 50 yds", "sets": "200 yds", "cue": "85–90% effort. Maintain form even when tired. 40 sec rest." },
-          { "name": "Pyramid: 25+50+75+50+25 yds", "sets": "225 yds", "cue": "Start easy, peak at 75 yds, come back down. 20 sec between." },
-          { "name": "Cool-Down: 100 yds easy", "sets": "100 yds", "cue": "Backstroke or slow freestyle. Controlled breathing." }
-        ]
-      },
-      "meals": [
-        {
-          "id": "sun-b", "name": "Breakfast", "time": "9:00 AM", "emoji": "🍳",
-          "recipe": "Weekend Protein Brunch",
-          "cal": 500, "protein": 42,
-          "note": "Sit upright for 30 min after eating",
+          "id": "sun-b",
+          "name": "Breakfast",
+          "time": "8:30 AM",
+          "emoji": "🍳",
+          "recipe": "Weekend Brunch — Eggs & Smoked Salmon",
+          "cal": 520,
+          "protein": 38,
           "ingredients": [
             "2 poached eggs on whole grain toast",
             "2 oz smoked salmon",
             "¼ avocado + sliced cucumber + fresh dill",
-            "½ cup plain Greek yogurt with blueberries"
+            "½ cup blueberries",
+            "Sit upright 30 min after eating"
           ]
         },
         {
-          "id": "sun-l", "name": "Lunch", "time": "1:00 PM", "emoji": "🍲",
-          "recipe": "Ground Beef & Lentil Soup",
-          "cal": 460, "protein": 40,
+          "id": "sun-l",
+          "name": "Lunch",
+          "time": "1:00 PM",
+          "emoji": "🍲",
+          "recipe": "Red Lentil & Spinach Soup",
+          "cal": 490,
+          "protein": 28,
+          "hospital_safe": true,
           "ingredients": [
-            "4 oz lean ground beef",
-            "Canned lentils + 2 cups broth",
-            "Diced carrots + celery + garlic",
+            "Red lentils + spinach + carrots + celery + garlic",
             "Cumin + turmeric + ginger",
-            "1 slice whole grain bread"
+            "1 slice whole grain bread + thin almond butter"
           ]
         },
         {
-          "id": "sun-t", "name": "Sweet Treat", "time": "3:00 PM", "emoji": "🥭",
-          "recipe": "Frozen Mango + Coconut",
-          "cal": 155, "protein": 1, "isTreat": true,
+          "id": "sun-t",
+          "name": "Sweet Treat",
+          "time": "3:30 PM",
+          "emoji": "🥭",
+          "recipe": "Mango & Coconut Cream",
+          "cal": 190,
+          "protein": 2,
+          "isTreat": true,
           "ingredients": [
             "½ cup frozen mango chunks",
             "Small dollop of coconut cream",
-            "Or: one small bakery item with herbal tea"
+            "Enjoyed with herbal tea"
           ]
         },
         {
-          "id": "sun-d", "name": "Dinner", "time": "6:00 PM", "emoji": "🍗",
-          "recipe": "Garlic Chicken Breast Stir Fry",
-          "cal": 435, "protein": 40,
-          "note": "Finish 2.5–3 hrs before bed",
+          "id": "sun-d",
+          "name": "Dinner",
+          "time": "6:30 PM",
+          "emoji": "🍗",
+          "recipe": "Grilled Chicken Thighs with Farro & Zucchini",
+          "cal": 500,
+          "protein": 40,
+          "note": "Finish 2.5–3 hrs before bed. Fennel tea after dinner.",
           "ingredients": [
-            "5 oz chicken breast sliced thin",
-            "Bok choy + snap peas + bell pepper + garlic",
-            "Low-sodium soy sauce + sesame oil + ginger",
-            "⅓ cup jasmine rice"
+            "4 oz boneless skinless chicken thighs marinated in olive oil + garlic + fresh herbs + tiny splash ACV",
+            "Roasted zucchini",
+            "⅓ cup farro",
+            "Fennel tea after dinner for digestion"
           ]
         }
       ],
-      "recovery": "Full lymphatic drainage + stretch + restorative swim/yoga",
+      "recovery": "Full lymphatic drainage + stretch + restorative swim or yoga if energy allows",
       "recoveryTime": "20–30 min",
-      "recoveryIcon": "🌿"
+      "recoveryIcon": "🧘"
     }
   }
 }
